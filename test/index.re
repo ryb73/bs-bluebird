@@ -24,3 +24,10 @@ all2((resolve(99), resolve("problems")))
         Js.log2(a, b);
         resolve();
     });
+
+Js.Promise.resolve(("a", "b"))
+    |> fromPromise
+    |> spread2((a, b) => {
+        Js.log2(a, b);
+        resolve();
+    });
