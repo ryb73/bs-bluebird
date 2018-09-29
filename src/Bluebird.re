@@ -1,6 +1,16 @@
-type t('a);
+type t(+'a);
+type error = exn;
 
-[@bs.module] [@bs.new] external make : ((~resolve: ('a => unit), ~reject: (exn => unit)) => 'z) => t('a) = "bluebird";
+[@bs.module] [@bs.new]
+external mk :
+    ((~resolve: ('a => unit), ~reject: (exn => unit)) => unit)
+    => t('a) = "bluebird";
+
+/* For compatibility with Js.Promise interface */
+[@bs.module] [@bs.new]
+external make :
+    ((~resolve: (. 'a) => unit, ~reject: (. exn) => unit) => unit)
+    => t('a) = "bluebird";
 
 external toPromise : t('a) => Js.Promise.t('a) = "%identity";
 [@bs.module "bluebird"] external fromPromise : Js.Promise.t('a) => t('a) = "resolve";
@@ -15,7 +25,9 @@ external toPromise : t('a) => Js.Promise.t('a) = "%identity";
 [@bs.module "bluebird"] external all5 : ((t('a), t('b), t('c), t('d), t('e))) => t(('a, 'b, 'c, 'd, 'e)) = "all";
 [@bs.module "bluebird"] external all6 : ((t('a), t('b), t('c), t('d), t('e), t('f))) => t(('a, 'b, 'c, 'd, 'e, 'f)) = "all";
 
+[@bs.module "bluebird"] external race : array(t('a)) => t('a) = "";
+
 [@bs.send.pipe: t('a)] external then_ : ('a => t('b)) => t('b) = "then";
-[@bs.send.pipe: t('a)] external catch : (exn => t('a)) => t('a) = "";
+[@bs.send.pipe: t('a)] external catch : (error => t('a)) => t('a) = "";
 
 [@bs.send.pipe: t(('a, 'b))] external spread2 : ('a => 'b => t('c)) => t('c) = "spread";
