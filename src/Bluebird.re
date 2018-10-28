@@ -12,8 +12,8 @@ external make :
     ((~resolve: (. 'a) => unit, ~reject: (. exn) => unit) => unit)
     => t('a) = "bluebird";
 
-external toPromise : t('a) => Js.Promise.t('a) = "%identity";
-[@bs.module "bluebird"] external fromPromise : Js.Promise.t('a) => t('a) = "resolve";
+external toJs : t('a) => Js.Promise.t('a) = "%identity";
+[@bs.module "bluebird"] external fromJs : Js.Promise.t('a) => t('a) = "resolve";
 
 [@bs.module "bluebird"] external resolve : 'a => t('a) = "";
 [@bs.module "bluebird"] external reject : exn => t('a) = "";

@@ -39,7 +39,7 @@ all2((resolve(99), resolve("problems")))
     });
 
 Js.Promise.resolve(("a", "b"))
-    |> fromPromise
+    |> fromJs
     |> spread2((a, b) => {
         Js.log2(a, b);
         resolve();
