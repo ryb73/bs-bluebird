@@ -31,3 +31,8 @@ external toJs : t('a) => Js.Promise.t('a) = "%identity";
 [@bs.send.pipe: t('a)] external catch : (error => t('a)) => t('a) = "";
 
 [@bs.send.pipe: t(('a, 'b))] external spread2 : ('a => 'b => t('c)) => t('c) = "spread";
+
+[@bs.send.pipe: t('a)] external isFulfilled : bool = "";
+[@bs.send.pipe: t('a)] external isRejected : bool = "";
+[@bs.send.pipe: t('a)] external isPending : bool = "";
+[@bs.send.pipe: t('a)] external isCancelled : bool = "";

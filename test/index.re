@@ -1,4 +1,5 @@
 open Bluebird;
+open Js.Global;
 
 let map = (callback) => then_((v) => resolve(callback(v)));
 
@@ -44,3 +45,27 @@ Js.Promise.resolve(("a", "b"))
         Js.log2(a, b);
         resolve();
     });
+
+let p = mk((~resolve, ~reject as _) => {
+    setTimeout(_ => resolve(), 100)
+    |> ignore;
+});
+let b2x = b => b ? "X" : " ";
+let logStatus = (p) => {
+    Js.log("f / r / p / c");
+    Js.logMany([|
+        "%s   %s   %s   %s",
+        isFulfilled(p) |> b2x, isRejected(p) |> b2x,
+        isPending(p) |> b2x, isCancelled(p) |> b2x,
+    |]);
+};
+
+logStatus(p);
+setTimeout(() =>  {
+    logStatus(p);
+    let p = p |> then_(_ => Js.Exn.raiseError("fail"));
+    logStatus(p);
+    setTimeout(_ => logStatus(p), 1);
+
+    p |> catch(_ => resolve()) |> ignore;
+}, 200);
