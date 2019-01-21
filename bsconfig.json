@@ -1,5 +1,5 @@
 {
-    "name" : "bs-bluebird",
+    "name" : "@ryb73/bs-bluebird",
     "sources" : [
         { "dir" : "src" },
         {

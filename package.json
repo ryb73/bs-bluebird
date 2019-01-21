@@ -1,5 +1,5 @@
 {
-  "name": "bs-bluebird",
+  "name": "@ryb73/bs-bluebird",
   "version": "0.0.1",
   "description": "BuckleScript bindings for bluebird",
   "main": "index.js",
@@ -10,6 +10,7 @@
     "clean": "rm -rf lib && bsb -clean-world",
     "postinstall": "[ ! -f package-links.json ] || ppl link-file"
   },
+  "files": [ "/lib/js/src" ],
   "keywords": [
     "bucklescript",
     "reason",
